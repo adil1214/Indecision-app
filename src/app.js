@@ -23,6 +23,11 @@ const onRemoveAll = (e) => {
     render();
 };
 
+const onMakeDecision = () => {
+    const randomNum = Math.floor( Math.random() * app.options.length );
+    alert(app.options[randomNum]);
+};
+
 
 const render = () => {
     let template = (
@@ -30,7 +35,7 @@ const render = () => {
             <h1>{app.title}</h1> 
             {app.subtitle && <p>{app.subtitle}</p>}
             <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
-            <p>{app.options.length}</p>
+            <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should i do?</button>
             <button onClick={onRemoveAll}>Clear List</button>
             <ol>
                 {app.options.map((val, index) => <li key={index}>{val}</li>)}
