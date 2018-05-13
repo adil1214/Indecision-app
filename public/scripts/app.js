@@ -1,33 +1,17 @@
 'use strict';
 
-console.log('app.js is running');
-
 var appRoot = document.getElementById('app');
 
-var app = {
-    title: 'Indecesion app',
-    subtitle: 'Put your life on the hand of your brain',
-    options: []
+var data = {
+    hiddenText: 'hey these are now some details you can see now.',
+    status: true
 };
 
-var onFormSubmit = function onFormSubmit(e) {
-    e.preventDefault();
-    var option = e.target.elements.option.value;
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = '';
-    }
+var statusToggle = function statusToggle(e) {
+    data.status = !data.status;
+
+    // console.log(data.status);
     render();
-};
-
-var onRemoveAll = function onRemoveAll(e) {
-    app.options = [];
-    render();
-};
-
-var onMakeDecision = function onMakeDecision() {
-    var randomNum = Math.floor(Math.random() * app.options.length);
-    alert(app.options[randomNum]);
 };
 
 var render = function render() {
@@ -37,49 +21,18 @@ var render = function render() {
         React.createElement(
             'h1',
             null,
-            app.title
-        ),
-        app.subtitle && React.createElement(
-            'p',
-            null,
-            app.subtitle
-        ),
-        React.createElement(
-            'p',
-            null,
-            app.options.length > 0 ? 'Here are your options' : 'No options'
+            'visibility toggle'
         ),
         React.createElement(
             'button',
-            { disabled: app.options.length === 0, onClick: onMakeDecision },
-            'What should i do?'
+            { onClick: statusToggle },
+            data.status ? 'Hide data' : 'Show data'
         ),
-        React.createElement(
-            'button',
-            { onClick: onRemoveAll },
-            'Clear List'
-        ),
-        React.createElement(
-            'ol',
+        React.createElement('br', null),
+        data.status && React.createElement(
+            'p',
             null,
-            app.options.map(function (val, index) {
-                return React.createElement(
-                    'li',
-                    { key: index },
-                    val
-                );
-            })
-        ),
-        React.createElement(
-            'form',
-            { onSubmit: onFormSubmit },
-            React.createElement('input', { type: 'text', name: 'option' }),
-            React.createElement('br', null),
-            React.createElement(
-                'button',
-                null,
-                'Add Option'
-            )
+            data.hiddenText
         )
     );
 
