@@ -17,7 +17,7 @@ var IndecesionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecesionApp.__proto__ || Object.getPrototypeOf(IndecesionApp)).call(this, props));
 
         _this.state = {
-            options: ['aaa', 'bbbb', 'ccccc', 'dede']
+            options: []
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
@@ -44,9 +44,15 @@ var IndecesionApp = function (_React$Component) {
     }, {
         key: 'handleAddOption',
         value: function handleAddOption(opt) {
+            if (!opt) {
+                return 'Enter valid value to add item';
+            } else if (this.state.options.indexOf(opt) > -1) {
+                return 'This option already exists';
+            }
+
             this.setState(function (prevState) {
                 return {
-                    options: prevState.options.push(opt)
+                    options: prevState.options.concat(opt)
                 };
             });
         }
@@ -59,7 +65,10 @@ var IndecesionApp = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, { title: title, subtitle: subtitle }),
+                React.createElement(Header, {
+                    title: title,
+                    subtitle: subtitle
+                }),
                 React.createElement(Action, {
                     anOptionExists: this.state.options.length > 0,
                     handlePickOption: this.handlePickOption
@@ -68,7 +77,9 @@ var IndecesionApp = function (_React$Component) {
                     options: this.state.options,
                     handleDeleteOptions: this.handleDeleteOptions
                 }),
-                React.createElement(AddOption, { handleAddAnOption: this.handleAddOption })
+                React.createElement(AddOption, {
+                    handleAddAnOption: this.handleAddOption
+                })
             );
         }
     }]);
@@ -197,6 +208,9 @@ var AddOption = function (_React$Component6) {
         var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
         _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
+        _this6.state = {
+            error: undefined
+        };
         return _this6;
     }
 
@@ -205,11 +219,17 @@ var AddOption = function (_React$Component6) {
         value: function handleAddOption(e) {
             e.preventDefault();
             var option = e.target.elements.option.value.trim();
-            if (option) {
-                // app.options.push(option);
-                this.props.handleAddAnOption(option);
-                e.target.elements.option.value = '';
-            }
+            var message = this.props.handleAddAnOption(option);
+
+            // if (message) {
+            //     alert(message);
+            // }
+
+            this.setState(function () {
+                return { error: message };
+            });
+
+            e.target.elements.option.value = '';
         }
     }, {
         key: 'render',
@@ -217,6 +237,11 @@ var AddOption = function (_React$Component6) {
             return React.createElement(
                 'div',
                 null,
+                this.state.error && React.createElement(
+                    'p',
+                    { style: { color: 'red' } },
+                    this.state.error
+                ),
                 React.createElement(
                     'form',
                     { onSubmit: this.handleAddOption },

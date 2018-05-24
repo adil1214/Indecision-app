@@ -2,7 +2,7 @@ class IndecesionApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            options: ['aaa', 'bbbb', 'ccccc', 'dede']
+            options: []
         };
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
@@ -24,9 +24,15 @@ class IndecesionApp extends React.Component {
     }
 
     handleAddOption(opt) {
+        if (!opt) {
+            return 'Enter valid value to add item';
+        } else if (this.state.options.indexOf(opt) > -1) {
+            return 'This option already exists';
+        }
+
         this.setState((prevState) => {
             return {
-                options: prevState.options.push(opt)
+                options: prevState.options.concat(opt)
             };
         });
     }
@@ -37,7 +43,10 @@ class IndecesionApp extends React.Component {
         // const options = ['thing one', 'thing two', 'thing three'];
         return (
             <div>
-                <Header title={title} subtitle={subtitle} />
+                <Header 
+                    title={title} 
+                    subtitle={subtitle} 
+                />
                 <Action 
                     anOptionExists={this.state.options.length > 0}
                     handlePickOption={this.handlePickOption}
@@ -46,7 +55,9 @@ class IndecesionApp extends React.Component {
                     options={this.state.options} 
                     handleDeleteOptions={this.handleDeleteOptions}
                 />
-                <AddOption handleAddAnOption={this.handleAddOption} />
+                <AddOption 
+                    handleAddAnOption={this.handleAddOption} 
+                />
             </div>
         );
     }
@@ -99,21 +110,31 @@ class AddOption extends React.Component {
     constructor(props) {
         super(props);
         this.handleAddOption = this.handleAddOption.bind(this);
+        this.state = {
+            error: undefined
+        };
     } 
 
     handleAddOption(e) {
         e.preventDefault();
         const option = e.target.elements.option.value.trim();
-        if (option) {
-            // app.options.push(option);
-            this.props.handleAddAnOption(option);
-            e.target.elements.option.value = '';
-        }   
+        const message = this.props.handleAddAnOption(option);
+
+        // if (message) {
+        //     alert(message);
+        // }
+
+        this.setState(() => {
+            return {error: message};
+        })
+
+        e.target.elements.option.value = '';
     }
 
     render() {
         return (
             <div>
+                {this.state.error && <p style={{color: 'red'}}>{this.state.error}</p> }
                 <form onSubmit={this.handleAddOption}>
                     <input type="text" name="option" autoComplete="off"/>
                     <br/>
