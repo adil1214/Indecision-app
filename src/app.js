@@ -1,3 +1,5 @@
+// stateless functional component
+
 class IndecesionApp extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,7 @@ class IndecesionApp extends React.Component {
 
     handleAddOption(opt) {
         if (!opt) {
-            return 'Enter valid value to add item';
+            return 'Enter valid value to add item';            
         } else if (this.state.options.indexOf(opt) > -1) {
             return 'This option already exists';
         }
@@ -43,20 +45,20 @@ class IndecesionApp extends React.Component {
         // const options = ['thing one', 'thing two', 'thing three'];
         return (
             <div>
-                <Header 
-                    title={title} 
-                    subtitle={subtitle} 
+                <Header
+                    title={title}
+                    subtitle={subtitle}
                 />
-                <Action 
+                <Action
                     anOptionExists={this.state.options.length > 0}
                     handlePickOption={this.handlePickOption}
                 />
-                <Options 
-                    options={this.state.options} 
+                <Options
+                    options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
                 />
-                <AddOption 
-                    handleAddAnOption={this.handleAddOption} 
+                <AddOption
+                    handleAddAnOption={this.handleAddOption}
                 />
             </div>
         );
@@ -64,47 +66,40 @@ class IndecesionApp extends React.Component {
 }
 
 
-class Header extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subtitle}</h2>
-            </div>
-        );
-    }
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subtitle}</h2>
+        </div>
+    );
+};
+
+const Action = (props) => {
+    return (
+        <div>
+            <button disabled={!props.anOptionExists} onClick={props.handlePickOption} >What should i do?</button>
+        </div>
+    );
+};
+
+
+const Options = (props) => {
+    return (
+        <div>
+            <button onClick={props.handleDeleteOptions}>Clear List</button>
+            {props.options.map((value, key) => <Option key={key} text={value} />)}
+        </div>
+    )
 }
 
-class Action extends React.Component {    
-    render() {
+const Option = (props) => {
         return (
             <div>
-                <button disabled={!this.props.anOptionExists} onClick={this.props.handlePickOption} >What should i do?</button>
+                {props.text}
             </div>
         );
-    }
-}
-
-class Options extends React.Component {
-    render() {
-        return (
-            <div>
-                <button onClick={this.props.handleDeleteOptions}>Clear List</button>
-                {this.props.options.map((value, key) => <Option key={key} text={value} /> )}
-            </div>
-        )
-    }
-}
-
-class Option extends React.Component {
-    render() {
-        return (
-            <div>
-                {this.props.text}
-            </div>
-        );
-    }
-}
+};
 
 class AddOption extends React.Component {
     constructor(props) {
@@ -113,19 +108,17 @@ class AddOption extends React.Component {
         this.state = {
             error: undefined
         };
-    } 
+    }
 
     handleAddOption(e) {
         e.preventDefault();
         const option = e.target.elements.option.value.trim();
-        const message = this.props.handleAddAnOption(option);
-
-        // if (message) {
-        //     alert(message);
-        // }
+        let error = this.props.handleAddAnOption(option);
 
         this.setState(() => {
-            return {error: message};
+            return { 
+                error: error
+            };
         })
 
         e.target.elements.option.value = '';
@@ -134,10 +127,10 @@ class AddOption extends React.Component {
     render() {
         return (
             <div>
-                {this.state.error && <p style={{color: 'red'}}>{this.state.error}</p> }
+                {this.state.error && <p style={{ color: 'red' }}>{this.state.error}</p>}
                 <form onSubmit={this.handleAddOption}>
-                    <input type="text" name="option" autoComplete="off"/>
-                    <br/>
+                    <input type="text" name="option" autoComplete="off" />
+                    <br />
                     <button>Add Option</button>
                 </form>
             </div>
@@ -145,6 +138,14 @@ class AddOption extends React.Component {
     }
 }
 
-let appRoot = document.getElementById('app');
+const User = (props) => {
+    return (
+        <div>
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+        </div>
+    );
+};
 
+let appRoot = document.getElementById('app');
 ReactDOM.render(<IndecesionApp />, appRoot);
