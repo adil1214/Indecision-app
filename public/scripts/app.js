@@ -19,7 +19,7 @@ var IndecesionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecesionApp.__proto__ || Object.getPrototypeOf(IndecesionApp)).call(this, props));
 
         _this.state = {
-            options: []
+            options: props.options
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
@@ -68,7 +68,6 @@ var IndecesionApp = function (_React$Component) {
                 'div',
                 null,
                 React.createElement(Header, {
-                    title: title,
                     subtitle: subtitle
                 }),
                 React.createElement(Action, {
@@ -89,6 +88,10 @@ var IndecesionApp = function (_React$Component) {
     return IndecesionApp;
 }(React.Component);
 
+IndecesionApp.defaultProps = {
+    options: []
+};
+
 var Header = function Header(props) {
     return React.createElement(
         'div',
@@ -98,12 +101,16 @@ var Header = function Header(props) {
             null,
             props.title
         ),
-        React.createElement(
+        props.subtitle && React.createElement(
             'h2',
             null,
             props.subtitle
         )
     );
+};
+
+Header.defaultProps = {
+    title: 'Some title'
 };
 
 var Action = function Action(props) {
@@ -200,24 +207,5 @@ var AddOption = function (_React$Component2) {
     return AddOption;
 }(React.Component);
 
-var User = function User(props) {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'p',
-            null,
-            'Name: ',
-            props.name
-        ),
-        React.createElement(
-            'p',
-            null,
-            'Age: ',
-            props.age
-        )
-    );
-};
-
 var appRoot = document.getElementById('app');
-ReactDOM.render(React.createElement(IndecesionApp, null), appRoot);
+ReactDOM.render(React.createElement(IndecesionApp, { options: ['a', 'b', 'c'] }), appRoot);

@@ -4,7 +4,7 @@ class IndecesionApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            options: []
+            options: props.options
         };
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
@@ -46,7 +46,6 @@ class IndecesionApp extends React.Component {
         return (
             <div>
                 <Header
-                    title={title}
                     subtitle={subtitle}
                 />
                 <Action
@@ -65,14 +64,21 @@ class IndecesionApp extends React.Component {
     }
 }
 
+IndecesionApp.defaultProps = {
+    options: []
+};
 
 const Header = (props) => {
     return (
         <div>
             <h1>{props.title}</h1>
-            <h2>{props.subtitle}</h2>
+            {props.subtitle && <h2>{props.subtitle}</h2>}
         </div>
     );
+};
+
+Header.defaultProps = {
+    title: 'Some title'
 };
 
 const Action = (props) => {
@@ -138,14 +144,5 @@ class AddOption extends React.Component {
     }
 }
 
-const User = (props) => {
-    return (
-        <div>
-            <p>Name: {props.name}</p>
-            <p>Age: {props.age}</p>
-        </div>
-    );
-};
-
 let appRoot = document.getElementById('app');
-ReactDOM.render(<IndecesionApp />, appRoot);
+ReactDOM.render(<IndecesionApp options={['a', 'b', 'c']} />, appRoot);
