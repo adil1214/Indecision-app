@@ -8,8 +8,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// stateless functional component
-
 var IndecesionApp = function (_React$Component) {
     _inherits(IndecesionApp, _React$Component);
 
@@ -22,6 +20,7 @@ var IndecesionApp = function (_React$Component) {
             options: props.options
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
+        _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.handlePickOption = _this.handlePickOption.bind(_this);
         return _this;
@@ -31,8 +30,18 @@ var IndecesionApp = function (_React$Component) {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
+                return { options: [] };
+            });
+        }
+    }, {
+        key: 'handleDeleteOption',
+        value: function handleDeleteOption(option) {
+            // console.log('option :', option);
+            this.setState(function (prevState) {
                 return {
-                    options: []
+                    options: prevState.options.filter(function (opt) {
+                        return opt !== option;
+                    })
                 };
             });
         }
@@ -53,9 +62,7 @@ var IndecesionApp = function (_React$Component) {
             }
 
             this.setState(function (prevState) {
-                return {
-                    options: prevState.options.concat(opt)
-                };
+                return { options: prevState.options.concat(opt) };
             });
         }
     }, {
@@ -76,7 +83,8 @@ var IndecesionApp = function (_React$Component) {
                 }),
                 React.createElement(Options, {
                     options: this.state.options,
-                    handleDeleteOptions: this.handleDeleteOptions
+                    handleDeleteOptions: this.handleDeleteOptions,
+                    handleDeleteOption: this.handleDeleteOption
                 }),
                 React.createElement(AddOption, {
                     handleAddAnOption: this.handleAddOption
@@ -135,7 +143,11 @@ var Options = function Options(props) {
             'Clear List'
         ),
         props.options.map(function (value, key) {
-            return React.createElement(Option, { key: key, text: value });
+            return React.createElement(Option, {
+                key: key,
+                text: value,
+                handleDeleteOption: props.handleDeleteOption
+            });
         })
     );
 };
@@ -144,7 +156,16 @@ var Option = function Option(props) {
     return React.createElement(
         'div',
         null,
-        props.text
+        props.text,
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    props.handleDeleteOption(props.text);
+                }
+            },
+            'remove'
+        )
     );
 };
 
@@ -171,9 +192,7 @@ var AddOption = function (_React$Component2) {
             var error = this.props.handleAddAnOption(option);
 
             this.setState(function () {
-                return {
-                    error: error
-                };
+                return { error: error };
             });
 
             e.target.elements.option.value = '';
@@ -208,4 +227,4 @@ var AddOption = function (_React$Component2) {
 }(React.Component);
 
 var appRoot = document.getElementById('app');
-ReactDOM.render(React.createElement(IndecesionApp, { options: ['a', 'b', 'c'] }), appRoot);
+ReactDOM.render(React.createElement(IndecesionApp, null), appRoot);
