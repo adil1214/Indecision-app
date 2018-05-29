@@ -16,17 +16,33 @@ var IndecesionApp = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (IndecesionApp.__proto__ || Object.getPrototypeOf(IndecesionApp)).call(this, props));
 
-        _this.state = {
-            options: props.options
-        };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.handlePickOption = _this.handlePickOption.bind(_this);
+
+        _this.state = {
+            options: props.options
+        };
         return _this;
     }
 
     _createClass(IndecesionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('componentDidMount!');
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            console.log('componentDidUpdate!', prevState.options, '=>', this.state.options);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('componentWillUnmount!');
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
@@ -36,7 +52,6 @@ var IndecesionApp = function (_React$Component) {
     }, {
         key: 'handleDeleteOption',
         value: function handleDeleteOption(option) {
-            // console.log('option :', option);
             this.setState(function (prevState) {
                 return {
                     options: prevState.options.filter(function (opt) {
@@ -70,7 +85,7 @@ var IndecesionApp = function (_React$Component) {
         value: function render() {
             var title = 'Indecesion';
             var subtitle = 'put your life in the hands of a computer';
-            // const options = ['thing one', 'thing two', 'thing three'];
+
             return React.createElement(
                 'div',
                 null,

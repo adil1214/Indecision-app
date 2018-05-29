@@ -1,13 +1,27 @@
 class IndecesionApp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            options: props.options
-        };
+        
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handlePickOption = this.handlePickOption.bind(this);
+
+        this.state = {
+            options: props.options
+        };
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount!');
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate!', prevState.options, '=>', this.state.options);
+    }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount!');
     }
 
     handleDeleteOptions() {
@@ -15,7 +29,6 @@ class IndecesionApp extends React.Component {
     }
 
     handleDeleteOption(option) {
-        // console.log('option :', option);
         this.setState((prevState) => ({
             options: prevState.options.filter(opt => opt !== option)
         }));
@@ -40,7 +53,7 @@ class IndecesionApp extends React.Component {
     render() {
         const title = 'Indecesion';
         const subtitle = 'put your life in the hands of a computer';
-        // const options = ['thing one', 'thing two', 'thing three'];
+
         return (
             <div>
                 <Header
