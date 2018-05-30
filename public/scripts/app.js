@@ -30,12 +30,26 @@ var IndecesionApp = function (_React$Component) {
     _createClass(IndecesionApp, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('componentDidMount!');
+            try {
+                var json = localStorage.getItem('options');
+                var optionsArray = JSON.parse(json);
+                if (optionsArray) {
+                    this.setState(function () {
+                        return {
+                            options: optionsArray
+                        };
+                    });
+                }
+            } catch (e) {}
         }
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
-            console.log('componentDidUpdate!', prevState.options, '=>', this.state.options);
+            // console.log('componentDidUpdate!', prevState.options, '=>', this.state.options);
+            if (prevState.options.length !== this.state.options.length) {
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+            }
         }
     }, {
         key: 'componentWillUnmount',
@@ -156,6 +170,11 @@ var Options = function Options(props) {
             'button',
             { onClick: props.handleDeleteOptions },
             'Clear List'
+        ),
+        props.options.length === 0 && React.createElement(
+            'p',
+            null,
+            'Please add an options to get started.'
         ),
         props.options.map(function (value, key) {
             return React.createElement(Option, {
