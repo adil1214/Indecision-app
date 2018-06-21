@@ -60,14 +60,58 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
+/******/ ({
 
-console.log('app.js is running');
+/***/ 12:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(25);
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+
+
+
+// console.log('app.js is running.');
+
+console.log('3 - 5 = ', __WEBPACK_IMPORTED_MODULE_0__utils__["b" /* default */](3, 5));
+console.log('3 + 5 = ', __WEBPACK_IMPORTED_MODULE_0__utils__["a" /* add */](3, 5));
+
+
+
+
+
+// named exports        (should call it by name)
+// default exports      (you can use anything you want)
+
+
+/***/ }),
+
+/***/ 25:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+console.log('utils.js is running');
+
+// const square = (x) => x*x;
+
+// export { square };
+
+const add = (a, b) => a+b;
+/* harmony export (immutable) */ __webpack_exports__["a"] = add;
+
+const square = (a) => a*a;
+/* unused harmony export square */
+
+// const substract = (a, b) => a-b;
+/* harmony default export */ __webpack_exports__["b"] = ((a, b) => a-b);
+
+// export {square, add, substract as default};
 
 /***/ })
-/******/ ]);
+
+/******/ });
