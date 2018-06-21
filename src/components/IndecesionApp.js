@@ -29,7 +29,7 @@ export default class IndecesionApp extends React.Component {
                 }));
             }
         } catch (e) {
-
+            // who cares...
         }
     }
 
