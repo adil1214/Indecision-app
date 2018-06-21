@@ -1,16 +1,7 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import sub, {square, add} from './utils';
+const template = <p>testing</p>;
+// const template = React.createElement('p', {}, 'testing 12344567674563456') ;
+ReactDOM.render(template, document.getElementById('app'));
 
-// console.log('app.js is running.');
-
-console.log('3 - 5 = ', sub(3, 5));
-console.log('3 + 5 = ', add(3, 5));
-
-
-
-
-
-// named exports        (should call it by name)
-// default exports      (you can use anything you want)
