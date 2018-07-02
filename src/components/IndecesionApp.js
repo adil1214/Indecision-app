@@ -4,6 +4,8 @@ import AddOption from './AddOption';
 import Options from './Options';
 import Header from './Header';
 import Action from './Action';
+import OptionModal from './OptionModal';
+
 
 export default class IndecesionApp extends React.Component {
     constructor(props) {
@@ -15,7 +17,8 @@ export default class IndecesionApp extends React.Component {
         this.handlePickOption = this.handlePickOption.bind(this);
 
         this.state = {
-            options: props.options
+            options: props.options,
+            selectedOption: undefined
         };
     }
 
@@ -92,6 +95,7 @@ export default class IndecesionApp extends React.Component {
                 <AddOption
                     handleAddAnOption={this.handleAddOption}
                 />
+                <OptionModal />
             </div>
         );
     }
