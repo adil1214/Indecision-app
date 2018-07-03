@@ -61,7 +61,9 @@ export default class IndecesionApp extends React.Component {
     handlePickOption() {
         const l = this.state.options.length;
         const i = Math.floor(Math.random() * l);
-        alert(this.state.options[i])
+        this.setState(() => {selectedOption: this.state.options[i]});
+        console.log('option picked: ', this.state.selectedOption);
+        // alert(this.state.options[i]);               // TODO: replace this
     }
 
     handleAddOption(opt) {
@@ -95,7 +97,10 @@ export default class IndecesionApp extends React.Component {
                 <AddOption
                     handleAddAnOption={this.handleAddOption}
                 />
-                <OptionModal />
+                <OptionModal 
+                    selectedOption={this.state.selectedOption}
+                    openModal={!!this.state.selectedOption}
+                />
             </div>
         );
     }
