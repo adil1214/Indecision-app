@@ -15,6 +15,7 @@ export default class IndecesionApp extends React.Component {
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handlePickOption = this.handlePickOption.bind(this);
+        this.handleClearSelectedOption = this.handleClearSelectedOption.bind(this);
 
         this.state = {
             options: props.options,
@@ -61,7 +62,8 @@ export default class IndecesionApp extends React.Component {
     handlePickOption() {
         const l = this.state.options.length;
         const i = Math.floor(Math.random() * l);
-        alert(this.state.options[i])
+        // alert(this.state.options[i]);
+        this.setState(() => ({selectedOption: this.state.options[i]}));
     }
 
     handleAddOption(opt) {
@@ -72,6 +74,12 @@ export default class IndecesionApp extends React.Component {
         }
 
         this.setState((prevState) => ({ options: prevState.options.concat(opt) }));
+    }
+
+    handleClearSelectedOption() {
+        this.setState(() => ({
+            selectedOption: undefined
+        }));
     }
 
     render() {
@@ -95,7 +103,10 @@ export default class IndecesionApp extends React.Component {
                 <AddOption
                     handleAddAnOption={this.handleAddOption}
                 />
-                <OptionModal />
+                <OptionModal 
+                    optionSelected={this.state.selectedOption}
+                    handleClearSelectedOption={this.handleClearSelectedOption}
+                />
             </div>
         );
     }
