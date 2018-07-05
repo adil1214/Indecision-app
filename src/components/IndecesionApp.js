@@ -89,20 +89,23 @@ export default class IndecesionApp extends React.Component {
         return (
             <div>
                 <Header
+                    title={title}
                     subtitle={subtitle}
                 />
-                <Action
-                    anOptionExists={this.state.options.length > 0}
-                    handlePickOption={this.handlePickOption}
-                />
-                <Options
-                    options={this.state.options}
-                    handleDeleteOptions={this.handleDeleteOptions}
-                    handleDeleteOption={this.handleDeleteOption}
-                />
-                <AddOption
-                    handleAddAnOption={this.handleAddOption}
-                />
+                <div className="container">
+                    <Action
+                        anOptionExists={this.state.options.length > 0}
+                        handlePickOption={this.handlePickOption}
+                    />
+                    <Options
+                        options={this.state.options}
+                        handleDeleteOptions={this.handleDeleteOptions}
+                        handleDeleteOption={this.handleDeleteOption}
+                    />
+                    <AddOption
+                        handleAddAnOption={this.handleAddOption}
+                    />
+                </div>
                 <OptionModal 
                     optionSelected={this.state.selectedOption}
                     handleClearSelectedOption={this.handleClearSelectedOption}
