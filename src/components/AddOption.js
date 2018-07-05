@@ -25,7 +25,6 @@ export default class AddOption extends React.Component {
                 {this.state.error && <p style={{ color: 'red' }}>{this.state.error}</p>}
                 <form onSubmit={this.handleAddOption}>
                     <input type="text" name="option" autoComplete="off" />
-                    <br />
                     <button>Add Option</button>
                 </form>
             </div>
