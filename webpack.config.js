@@ -25,6 +25,9 @@ module.exports = {
     },
     devtool: 'cheap-module-eval-source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'public')
+        contentBase: path.join(__dirname, 'public'),
+        port: 1234,
+        open: true,
+        openPage: ''    // <= webpack dev server bug workaround
     }
 };
